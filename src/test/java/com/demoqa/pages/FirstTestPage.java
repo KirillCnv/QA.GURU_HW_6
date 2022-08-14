@@ -63,9 +63,9 @@ public class FirstTestPage {
         return this;
     }
 
-    public FirstTestPage setBirtDate(String day, String month, String yaer) {
+    public FirstTestPage setBirtDate(String day, String month, String year) {
         $("#dateOfBirthInput").click();
-        calendarComponent.setDate("24", "May", "1994");
+        calendarComponent.setDate(day, month, year);
         return this;
     }
 
@@ -75,20 +75,20 @@ public class FirstTestPage {
         return this;
     }
 
-    public FirstTestPage setSubjects() {
-        $("#subjectsInput").setValue("physical Culture");
+    public FirstTestPage setSubjects(String value) {
+        $("#subjectsInput").setValue(value).pressEnter();
 
         return this;
     }
 
-    public FirstTestPage uploadFile() {
-        $("#uploadPicture").uploadFile(new File("src/test/resources/1.jpg"));
+    public FirstTestPage uploadFile(String src) {
+        $("#uploadPicture").uploadFile(new File(src));
 
         return this;
     }
 
-    public FirstTestPage setAddress() {
-        $("#currentAddress").setValue("Russia, Mosсow");
+    public FirstTestPage setAddress(String value) {
+        $("#currentAddress").setValue(value);
 
         return this;
     }
