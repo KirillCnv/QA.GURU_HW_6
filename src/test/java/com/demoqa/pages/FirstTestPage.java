@@ -1,8 +1,12 @@
 package com.demoqa.pages;
 
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.demoqa.pages.components.CalendarComponent;
+import com.demoqa.pages.components.HobbiesComponent;
+import com.demoqa.pages.components.SelectCityComponent;
+import com.demoqa.pages.components.SelectStateComponent;
+
+import java.io.File;
 
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -12,6 +16,10 @@ public class FirstTestPage {
     // Elements
 
     private CalendarComponent calendarComponent = new CalendarComponent();
+    private HobbiesComponent hobbiesComponent = new HobbiesComponent();
+    private SelectStateComponent selectState = new SelectStateComponent();
+    private SelectCityComponent selectCity = new SelectCityComponent();
+
 
     private SelenideElement
             firstNameInput = $("#firstName"),
@@ -61,8 +69,8 @@ public class FirstTestPage {
         return this;
     }
 
-    public FirstTestPage setHobbies() {
-        $(byText("Sports")).click();
+    public FirstTestPage setHobbies(String value) {
+        hobbiesComponent.setHobbies(value);
 
         return this;
     }
@@ -71,6 +79,32 @@ public class FirstTestPage {
         $("#subjectsInput").setValue("physical Culture");
 
         return this;
+    }
+
+    public FirstTestPage uploadFile() {
+        $("#uploadPicture").uploadFile(new File("src/test/resources/1.jpg"));
+
+        return this;
+    }
+
+    public FirstTestPage setAddress() {
+        $("#currentAddress").setValue("Russia, Mosсow");
+
+        return this;
+    }
+
+    public FirstTestPage selectState(String value) {
+        selectState.selectState(value);
+        return this;
+    }
+
+    public FirstTestPage selectCity(String value) {
+        selectCity.selectCity(value);
+        return this;
+    }
+
+    public void submit() {
+        $("#submit").click();
     }
 
 

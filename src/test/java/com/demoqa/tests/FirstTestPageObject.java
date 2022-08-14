@@ -2,19 +2,17 @@ package com.demoqa.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.demoqa.pages.FirstTestPage;
+import com.demoqa.pages.components.ResultComponent;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class FirstTestPageObject {
 
     FirstTestPage firstTestPage = new FirstTestPage();
+    ResultComponent result = new ResultComponent();
 
     @BeforeAll
     static void configure() {
@@ -33,30 +31,27 @@ public class FirstTestPageObject {
                 .setLastGender("Male")
                 .setLastPhone("7880852282")
                 .setBirtDate("24", "May", "1994")
-                .setHobbies()
-                .setSubjects();
-
-
-        $("#uploadPicture").uploadFile(new File("src/test/resources/1.jpg"));
-        $("#currentAddress").setValue("Russia, Mosсow");
-        //$(By.xpath("//h2[text()='" + form + "']//ancestor::div[@class='block-wrapper']")).scrollIntoView(false);
-        $(byText("Select State")).click();
-        $(byText("NCR")).click();
-        $(byText("Select City")).click();
-        $(byText("Delhi")).click();
-        $("#submit").click();
-
-
-        $(".modal-body").shouldHave(
-                text("Kirill"),
-                text("Chernyshov"),
-                text("user@email.com"),
-                text("Male"),
-                text("7880852282"),
-                text("24 May,1994"),
-                text("Sports"),
-                text("1.jpg"),
-                text("Russia, Mosсow"),
-                text("NCR Delhi"));
+                .setHobbies("Sports")
+                .setSubjects()
+                .uploadFile()
+                .setAddress()
+                .selectState("NCR")
+                .selectCity("Delhi")
+                .submit();
+        result.checkTitle()
+                .checkResult("Student Name", "Kirill Chernyshov")
+                .checkResult("Student Email", "user@email.com")
+                .checkResult("Gender", "Male")
+                .checkResult("Mobile", "7880852282")
+                .checkResult("Date of Birth", "24 May,1994")
+                .checkResult("Hobbies", "Sports")
+                .checkResult("Picture", "1.jpg")
+                .checkResult("Address", "Russia, Mosсow")
+                .checkResult("State and City", "NCR Delhi");
     }
 }
+
+
+
+
+
