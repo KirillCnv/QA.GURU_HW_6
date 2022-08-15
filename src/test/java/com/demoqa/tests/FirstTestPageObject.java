@@ -1,54 +1,46 @@
 package com.demoqa.tests;
 
-import com.codeborne.selenide.Configuration;
 import com.demoqa.pages.FirstTestPage;
 import com.demoqa.pages.components.ResultComponent;
-import org.junit.jupiter.api.BeforeAll;
+import com.demoqa.utils.TestConfig;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class FirstTestPageObject {
+public class FirstTestPageObject extends TestConfig {
 
     FirstTestPage firstTestPage = new FirstTestPage();
     ResultComponent result = new ResultComponent();
 
-    @BeforeAll
-    static void configure() {
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1920x1080";
-        Configuration.browserPosition = "0x0";
-        //Configuration.holdBrowserOpen = true;
-    }
 
     @Test
     void autoTest() {
         firstTestPage.openPage()
-                .setFirstName("Kirill")
-                .setLastName("Chernyshov")
-                .setLastEmail("user@email.com")
-                .setLastGender("Male")
-                .setLastPhone("7880852282")
-                .setBirtDate("24", "May", "1994")
-                .setHobbies("Sports")
-                .setSubjects("Computer Science")
-                .uploadFile("src/test/resources/1.jpg")
-                .setAddress("Russia, Mosсow")
-                .selectState("NCR")
-                .selectCity("Delhi")
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setLastEmail(email)
+                .setLastGender(gender)
+                .setLastPhone(mobileNumber)
+                .setBirtDate(day, month, year)
+                .setHobbies(hobbie)
+                .setSubjects(subject)
+                .uploadFile(uploadFoto)
+                .setAddress(address)
+                .selectState(state)
+                .selectCity(city)
                 .submit();
         result.checkTitle()
-                .checkResult("Student Name", "Kirill Chernyshov")
-                .checkResult("Student Email", "user@email.com")
-                .checkResult("Gender", "Male")
-                .checkResult("Mobile", "7880852282")
-                .checkResult("Date of Birth", "24 May,1994")
-                .checkResult("Subjects", "Computer Science")
-                .checkResult("Hobbies", "Sports")
-                .checkResult("Picture", "1.jpg")
-                .checkResult("Address", "Russia, Mosсow")
-                .checkResult("State and City", "NCR Delhi");
+                .checkResult("Student Name", fullName)
+                .checkResult("Student Email", email)
+                .checkResult("Gender", gender)
+                .checkResult("Mobile", mobileNumber)
+                .checkResult("Date of Birth", fullDate)
+                .checkResult("Subjects", subject)
+                .checkResult("Hobbies", hobbie)
+                .checkResult("Picture", verificationFoto)
+                .checkResult("Address", address)
+                .checkResult("State and City", stateAndCity);
     }
 }
 
